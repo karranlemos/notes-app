@@ -1,9 +1,16 @@
 import { Input, Button } from '@material-ui/core';
 import React, { useState, ChangeEventHandler, MouseEventHandler } from 'react';
 
+import INotesProvider from '../../infra/interfaces/INotesProvider';
 import useStyles from './styles';
 
-const NoteCreationForm: React.FC = () => {
+interface INoteCreationFormProps {
+  notesProvider: INotesProvider;
+}
+
+const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
+  notesProvider,
+}) => {
   const classes = useStyles();
 
   const [title, setTitle] = useState('');
@@ -17,8 +24,17 @@ const NoteCreationForm: React.FC = () => {
     setDescription(event.target.value);
   };
 
-  const submitHandler: MouseEventHandler<HTMLButtonElement> = () => {
-    console.log(title, description);
+  const submitHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+    try {
+      await notesProvider.createNotes([
+        {
+          title,
+          description,
+        },
+      ]);
+    } catch (error) {
+      console.log(':(', error);
+    }
   };
 
   return (
