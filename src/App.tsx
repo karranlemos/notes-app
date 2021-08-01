@@ -1,9 +1,9 @@
 import React from 'react';
 
+import NotesPage from './pages/NotesPage';
+
 const App: React.FC = () => (
-  <div>
-    Hey
-  </div>
+  <NotesPage />
 );
 
 export default App;
