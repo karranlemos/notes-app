@@ -23,6 +23,11 @@
     "eslint-plugin-import-helpers"
   ],
   "rules": {
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
+    "indent": "off",
     "react/jsx-filename-extension": [
       2,
       {
