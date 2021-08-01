@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 
 import colors from '../../app/colors';
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 
   noteForm: {
     padding: '20px 40px',
-    maxWidth: 400,
+    maxWidth: 500,
     width: '100%',
     borderRight: `3px solid ${colors.orange}`,
   },

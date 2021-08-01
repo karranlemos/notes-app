@@ -1,5 +1,6 @@
 import React from 'react';
 
+import NoteCreationForm from '../../components/NoteCreationForm';
 import useStyles from './styles';
 
 const NotesPage: React.FC = () => {
@@ -15,6 +16,7 @@ const NotesPage: React.FC = () => {
         <h2 className={classes.dashboardSubtitle}>
           Bloco de Notas
         </h2>
+        <NoteCreationForm />
       </div>
       <div
         className={classes.allNotes}
