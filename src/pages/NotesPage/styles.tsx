@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   dashboardSubtitle: {
     fontSize: 28,
     color: colors.purple,
+    fontWeight: 'bold',
   },
 
   noteForm: {

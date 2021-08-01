@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
+import colors from '../../app/colors';
 import elevatedBoxStyles from '../../app/styles/elevatedFormBox';
 
 const useStyles = makeStyles({
@@ -19,6 +20,19 @@ const useStyles = makeStyles({
   description: {
     ...elevatedBoxStyles.elevatedMultilineBox,
     minHeight: 200,
+  },
+
+  button: {
+    alignSelf: 'flex-end',
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: colors.orange,
+    color: colors.white,
+    fontWeight: 'bold',
+
+    '&:hover': {
+      backgroundColor: colors.orange,
+    },
   },
 });
 

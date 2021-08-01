@@ -1,4 +1,4 @@
-import { Input } from '@material-ui/core';
+import { Input, Button } from '@material-ui/core';
 import React from 'react';
 
 import useStyles from './styles';
@@ -23,6 +23,14 @@ const NoteCreationForm: React.FC = () => {
           root: classes.description,
         }}
       />
+      <Button
+        variant="contained"
+        classes={{
+          root: classes.button,
+        }}
+      >
+        Criar Nota
+      </Button>
     </div>
   );
 };
