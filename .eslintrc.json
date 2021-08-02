@@ -23,6 +23,11 @@
     "eslint-plugin-import-helpers"
   ],
   "rules": {
+    "nonblock-statement-body-position": "off",
+    "curly": "off",
+    "no-empty-function": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "max-len": "off",
     "react/prop-types": "off",
     "semi": "off",
     "@typescript-eslint/semi": ["error"],
@@ -64,7 +69,6 @@
     "no-shadow": "off",
     "no-console": "off",
     "no-useless-constructor": "off",
-    "no-empty-function": "off",
     "lines-between-class-members": "off",
     "import/extensions": [
       "error",

@@ -1,7 +1,14 @@
-import { Input, Button } from '@material-ui/core';
-import React, { useState, ChangeEventHandler, MouseEventHandler } from 'react';
+import { Button } from '@material-ui/core';
+import React, {
+  useRef,
+  useState,
+  ChangeEventHandler,
+  MouseEventHandler,
+} from 'react';
 
+import { toastSuccess, toastError } from '../../app/utils/toast';
 import INotesProvider from '../../infra/interfaces/INotesProvider';
+import InputItem, { IInputItemRef } from './InputItem';
 import useStyles from './styles';
 
 interface INoteCreationFormProps {
@@ -12,6 +19,9 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
   notesProvider,
 }) => {
   const classes = useStyles();
+
+  const titleRef = useRef<IInputItemRef>(null);
+  const descriptionRef = useRef<IInputItemRef>(null);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -25,6 +35,15 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
   };
 
   const submitHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+    if (title === '')
+      titleRef.current?.enableError('Assunto não pode estar vazio.');
+
+    if (description === '')
+      descriptionRef.current?.enableError('Texto não pode estar vazio.');
+
+    if (title === '' || description === '')
+      return;
+
     try {
       await notesProvider.createNotes([
         {
@@ -32,29 +51,31 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
           description,
         },
       ]);
+
+      setTitle('');
+      setDescription('');
+      toastSuccess('Nota criada com sucesso!');
     } catch (error) {
-      console.log(':(', error);
+      toastError('Criação de nota falhou.');
     }
   };
 
   return (
     <div className={classes.noteCreationForm}>
-      <Input
+      <InputItem
+        value={title}
+        ref={titleRef}
         placeholder="Assunto"
-        disableUnderline
         onChange={titleOnChangeHandler}
-        classes={{
-          root: classes.title,
-        }}
+        inputClasses={classes.title}
       />
-      <Input
+      <InputItem
+        value={description}
+        ref={descriptionRef}
         placeholder="Texto"
-        disableUnderline
-        multiline
         onChange={descriptionOnChangeHandler}
-        classes={{
-          root: classes.description,
-        }}
+        inputClasses={classes.description}
+        multiline
       />
       <Button
         variant="contained"
