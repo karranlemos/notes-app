@@ -8,6 +8,8 @@ import React, {
 
 import { toastSuccess, toastError } from '../../app/utils/toast';
 import INotesProvider from '../../infra/interfaces/INotesProvider';
+import { updateNotesAction } from '../../store/ducks/notesReducer/actions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import InputItem, { IInputItemRef } from './InputItem';
 import useStyles from './styles';
 
@@ -18,7 +20,10 @@ interface INoteCreationFormProps {
 const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
   notesProvider,
 }) => {
+  const dispatch = useAppDispatch();
   const classes = useStyles();
+
+  const notes = useAppSelector((state) => state.notes.notes);
 
   const titleRef = useRef<IInputItemRef>(null);
   const descriptionRef = useRef<IInputItemRef>(null);
@@ -45,16 +50,17 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
       return;
 
     try {
-      await notesProvider.createNotes([
+      const newNotes = await notesProvider.createNotes([
         {
           title,
           description,
         },
       ]);
 
+      dispatch(updateNotesAction(notes.concat(newNotes)));
+
       setTitle('');
       setDescription('');
-      toastSuccess('Nota criada com sucesso!');
     } catch (error) {
       toastError('Criação de nota falhou.');
     }
