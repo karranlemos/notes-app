@@ -6,7 +6,7 @@ import React, {
   MouseEventHandler,
 } from 'react';
 
-import { toastSuccess, toastError } from '../../app/utils/toast';
+import { toastError } from '../../app/utils/toast';
 import INotesProvider from '../../infra/interfaces/INotesProvider';
 import { updateNotesAction } from '../../store/ducks/notesReducer/actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
