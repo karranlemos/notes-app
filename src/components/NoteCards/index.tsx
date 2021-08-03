@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useWindowSize } from '../../app/utils/hooks';
 import { toastError } from '../../app/utils/toast';
@@ -20,14 +20,19 @@ const NoteCards: React.FC<INoteCardsParams> = ({
   const { isMobile } = useWindowSize();
   const classes = useStyles({ isMobile });
 
+  const [loading, setLoading] = useState(true);
+
   const notes: INote[] = useAppSelector((state) => state.notes.notes);
 
   const getInitialNotes = async () => {
+    setLoading(true);
     try {
       const notes: INote[] = await notesProvider.getNotes();
       dispatch(updateNotesAction(notes));
     } catch (error) {
       toastError('Falha ao buscar notas.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,6 +50,9 @@ const NoteCards: React.FC<INoteCardsParams> = ({
   };
 
   const getElementNotes = () => {
+    if (loading)
+      return 'Loading...';
+
     if (notes.length === 0)
       return 'Sem notas.';
 
