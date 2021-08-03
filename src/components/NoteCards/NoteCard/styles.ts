@@ -21,6 +21,9 @@ const useStyles = makeStyles({
     fontSize: 24,
     paddingBottom: 16,
     boxSizing: 'border-box',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 
   description: {
