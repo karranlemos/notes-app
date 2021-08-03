@@ -30,4 +30,17 @@ export default class NotesProvider implements INotesProvider {
       });
     }
   }
+
+  async deleteNotes(idsNotes: number[]): Promise<number> {
+    try {
+      const { data } = await notesAPI.delete('/notes', {
+        data: idsNotes,
+      });
+      return data.notes_deleted;
+    } catch (error) {
+      throw new APIRequestError({
+        error,
+      });
+    }
+  }
 }

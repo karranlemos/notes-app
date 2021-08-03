@@ -19,29 +19,44 @@ const NoteCards: React.FC<INoteCardsParams> = ({
 
   const notes: INote[] = useAppSelector((state) => state.notes.notes);
 
-  useEffect(() => {
-    const getInitialNotes = async () => {
-      try {
-        const notes: INote[] = await notesProvider.getNotes();
-        dispatch(updateNotesAction(notes));
-      } catch (error) {
-        toastError('Falha ao buscar notas.');
-      }
-    };
+  const getInitialNotes = async () => {
+    try {
+      const notes: INote[] = await notesProvider.getNotes();
+      dispatch(updateNotesAction(notes));
+    } catch (error) {
+      toastError('Falha ao buscar notas.');
+    }
+  };
 
+  useEffect(() => {
     getInitialNotes();
   }, []);
 
-  const elementNotes = notes.map((note) => (
-    <NoteCard
-      title={note.title}
-      description={note.description}
-    />
-  ));
+  const notesDeleterHandler = async (id: number) => {
+    try {
+      await notesProvider.deleteNotes([id]);
+      await getInitialNotes();
+    } catch (error) {
+      toastError('Não foi possível excluir nota.');
+    }
+  };
+
+  const getElementNotes = () => {
+    if (notes.length === 0)
+      return 'Sem notas.';
+
+    return notes.map((note) => (
+      <NoteCard
+        title={note.title}
+        description={note.description}
+        onClickCloseButton={() => notesDeleterHandler(note.id)}
+      />
+    ));
+  };
 
   return (
     <div className={classes.cards}>
-      {elementNotes}
+      {getElementNotes()}
     </div>
   );
 };

@@ -18,6 +18,7 @@ export interface INote {
 interface INotesProvider {
   createNotes(notesCreationParams: INotesCreationParams[]): Promise<INote[]>;
   getNotes(notesRetrievalParams?: INotesRetrievalParams): Promise<INote[]>;
+  deleteNotes(idsNotes: number[]): Promise<number>;
 }
 
 export default INotesProvider;
