@@ -25,7 +25,6 @@ const NoteCards: React.FC<INoteCardsParams> = ({
   const notes: INote[] = useAppSelector((state) => state.notes.notes);
 
   const getInitialNotes = async () => {
-    setLoading(true);
     try {
       const notes: INote[] = await notesProvider.getNotes();
       dispatch(updateNotesAction(notes));

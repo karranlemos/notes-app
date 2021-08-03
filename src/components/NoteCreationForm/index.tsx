@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import React, {
   useRef,
   useState,
@@ -30,6 +30,7 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const titleOnChangeHandler: ChangeEventHandler<HTMLInputElement> = (event) => {
     setTitle(event.target.value);
@@ -40,6 +41,9 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
   };
 
   const submitHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+    if (loading)
+      return;
+
     if (title === '')
       titleRef.current?.enableError('Assunto não pode estar vazio.');
 
@@ -48,6 +52,8 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
 
     if (title === '' || description === '')
       return;
+
+    setLoading(true);
 
     try {
       const newNotes = await notesProvider.createNotes([
@@ -63,7 +69,24 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
       setDescription('');
     } catch (error) {
       toastError('Criação de nota falhou.');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const getButtonText = () => {
+    if (!loading)
+      return 'Criar Nota';
+
+    return (
+      <CircularProgress
+        color="primary"
+        size={24}
+        classes={{
+          root: classes.loading,
+        }}
+      />
+    );
   };
 
   return (
@@ -90,7 +113,7 @@ const NoteCreationForm: React.FC<INoteCreationFormProps> = ({
           root: classes.button,
         }}
       >
-        Criar Nota
+        {getButtonText()}
       </Button>
     </div>
   );

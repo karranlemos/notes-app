@@ -24,8 +24,11 @@ const useStyles = makeStyles({
 
   button: {
     alignSelf: 'flex-end',
+    width: 148,
+    height: 44,
     paddingTop: 10,
     paddingBottom: 10,
+
     backgroundColor: colors.orange,
     color: colors.white,
     fontWeight: 'bold',
@@ -33,6 +36,10 @@ const useStyles = makeStyles({
     '&:hover': {
       backgroundColor: colors.orange,
     },
+  },
+
+  loading: {
+    color: colors.white,
   },
 });
 
