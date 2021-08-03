@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useWindowSize } from '../../app/utils/hooks';
 import NoteCards from '../../components/NoteCards';
 import NoteCreationForm from '../../components/NoteCreationForm';
 import NotesProvider from '../../infra/implementations/http/NotesProvider';
@@ -8,7 +9,8 @@ import useStyles from './styles';
 const notesProvider = new NotesProvider();
 
 const NotesPage: React.FC = () => {
-  const classes = useStyles();
+  const { isMobile } = useWindowSize();
+  const classes = useStyles({ isMobile });
 
   return (
     <div

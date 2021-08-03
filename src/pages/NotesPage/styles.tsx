@@ -1,17 +1,28 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
 import colors from '../../app/colors';
 
-const useStyles = makeStyles({
-  pageContainer: {
+interface IStyleProps {
+  isMobile: boolean | null,
+}
+
+interface IStyles {
+  [key: string]: string | number
+}
+
+const useStyles = makeStyles<Theme, IStyleProps>({
+  pageContainer: ({ isMobile }) => ({
+    display: 'flex',
+    flexDirection: isMobile ? 'column' : 'row',
     width: '100vw',
     height: '100vh',
     overflow: 'auto',
     boxSizing: 'border-box',
     backgroundColor: colors.white,
-    display: 'flex',
-    padding: '52px 0',
-  },
+    padding: isMobile
+      ? '0 52px'
+      : '52px 0',
+  }),
 
   dashboardSubtitle: {
     fontSize: 28,
@@ -19,17 +30,34 @@ const useStyles = makeStyles({
     fontWeight: 'bold',
   },
 
-  noteForm: {
-    padding: '20px 40px',
-    maxWidth: 500,
-    width: '100%',
-    borderRight: `3px solid ${colors.orange}`,
+  noteForm: ({ isMobile }) => {
+    const styles: IStyles = {
+      padding: isMobile
+        ? '20px 0px'
+        : '20px 40px',
+      maxWidth: isMobile
+        ? 'none'
+        : 500,
+      width: '100%',
+      borderRight: 'none',
+      borderBottom: 'none',
+    };
+
+    if (isMobile)
+      styles.borderBottom = `3px solid ${colors.orange}`;
+    else
+      styles.borderRight = `3px solid ${colors.orange}`;
+
+    return styles;
   },
 
-  allNotes: {
-    padding: '20px 40px',
+  allNotes: ({ isMobile }) => ({
+    padding: isMobile
+      ? '20px 0'
+      : '20px 40px',
     flex: 1,
-  },
+    overflowY: isMobile ? 'visible' : 'auto',
+  }),
 });
 
 export default useStyles;
