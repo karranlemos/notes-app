@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 
+import { useWindowSize } from '../../app/utils/hooks';
 import { toastError } from '../../app/utils/toast';
 import INotesProvider, { INote } from '../../infra/interfaces/INotesProvider';
 import { updateNotesAction } from '../../store/ducks/notesReducer/actions';
@@ -15,7 +16,9 @@ const NoteCards: React.FC<INoteCardsParams> = ({
   notesProvider,
 }) => {
   const dispatch = useAppDispatch();
-  const classes = useStyles();
+
+  const { isMobile } = useWindowSize();
+  const classes = useStyles({ isMobile });
 
   const notes: INote[] = useAppSelector((state) => state.notes.notes);
 
