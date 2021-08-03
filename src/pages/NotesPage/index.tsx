@@ -1,5 +1,6 @@
 import React from 'react';
 
+import NoteCards from '../../components/NoteCards';
 import NoteCreationForm from '../../components/NoteCreationForm';
 import NotesProvider from '../../infra/implementations/http/NotesProvider';
 import useStyles from './styles';
@@ -27,6 +28,7 @@ const NotesPage: React.FC = () => {
         <h2 className={classes.dashboardSubtitle}>
           Suas Notas
         </h2>
+        <NoteCards notesProvider={notesProvider} />
       </div>
     </div>
   );

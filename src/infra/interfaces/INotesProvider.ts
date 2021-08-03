@@ -3,6 +3,12 @@ export interface INotesCreationParams {
   description?: string | null;
 }
 
+export interface INotesRetrievalParams {
+  ids?: number[] | null;
+  title?: string | null;
+  description?: string | null;
+}
+
 export interface INote {
   id: number;
   title: string;
@@ -11,6 +17,7 @@ export interface INote {
 
 interface INotesProvider {
   createNotes(notesCreationParams: INotesCreationParams[]): Promise<INote[]>;
+  getNotes(notesRetrievalParams?: INotesRetrievalParams): Promise<INote[]>;
 }
 
 export default INotesProvider;

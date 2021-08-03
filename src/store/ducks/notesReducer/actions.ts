@@ -3,8 +3,8 @@ import { IActionUpdateNotes } from './interfaces';
 import types from './types';
 
 export const updateNotesAction = (
-  scrollBehavior: INote[],
+  notes: INote[],
 ): IActionUpdateNotes => ({
   type: types.UPDATE_NOTES,
-  payload: scrollBehavior,
+  payload: notes,
 });
